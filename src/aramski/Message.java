@@ -29,7 +29,7 @@ public class Message {
 		
 		System.out.println("sendMail inside");
 		
-		PostOffice.send();
+		//PostOffice.send();
 		return "show_profile";
 	}
 	

@@ -43,7 +43,11 @@
   <h:inputText value="#{user.username}" required="true"
 						requiredMessage="You must enter an username" id="uname" />
 					<h:message for="uname" />
-  
+
+  Mail: 
+  <h:inputText value="#{user.email}" required="true"
+						requiredMessage="You must enter an email" id="email" />
+					<h:message for="email" />		  
   Password: 
   <h:inputSecret value="#{user.password}" required="true"
 						requiredMessage="You must enter a password" id="pass" />

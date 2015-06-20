@@ -17,6 +17,7 @@ public class User {
 	private String password, password2;
 	private String name;
 	private String surname;
+	private String email;
 
 	private List<String> users;
 	private List<Message> inbox;
@@ -25,7 +26,7 @@ public class User {
 		users = new ArrayList<String>();
 		inbox = new ArrayList<Message>();
 		try {
-			ResultSet rs = Tools.executeQuery("SELECT login FROM uzytkownicy");
+			ResultSet rs = Tools.fetchDatabase("SELECT login FROM uzytkownicy");
 			while(rs.next()) {
 				users.add(rs.getString("login"));	
 				System.out.println("pobieram uzytkownikow");
@@ -44,7 +45,7 @@ public class User {
 	public void retrieveData() {
 		try {
 
-			ResultSet rs = Tools.executeQuery("SELECT nadawca, odbiorca, tresc FROM wiadomosci"); //WHERE odbiorca = '" + username + "'" + " AND nadawca = 'admin'");
+			ResultSet rs = Tools.fetchDatabase("SELECT nadawca, odbiorca, tresc FROM wiadomosci"); //WHERE odbiorca = '" + username + "'" + " AND nadawca = 'admin'");
 			System.out.println("przed pobraniem wiadomosci");
 			while(rs.next()) {
 				inbox.add(new Message(rs.getString("nadawca"), 
@@ -70,7 +71,7 @@ public class User {
 			md.update(password.getBytes());
 			password = bytesToHex(md.digest());
 
-			ResultSet rs = Tools.executeQuery("SELECT imie, nazwisko, login FROM uzytkownicy WHERE login = '" + username + "' AND haslo1 = '" + password + "'");
+			ResultSet rs = Tools.fetchDatabase("SELECT imie, nazwisko, login FROM uzytkownicy WHERE login = '" + username + "' AND haslo1 = '" + password + "'");
 			if(rs.next()) {
 				setName(rs.getString("imie"));				// 103 wi2 313 wi1
 				setSurname(rs.getString("nazwisko"));
@@ -96,8 +97,10 @@ public class User {
 			md.update(password2.getBytes());
 			password2 = bytesToHex(md.digest());
 
-			Tools.executeQuery("INSERT INTO mysociety.uzytkownicy (imie, nazwisko, login, haslo1, haslo2) VALUES ('" + name + "','" + surname + "','" + username + "','" + password + "','" + password2 + "')");
-
+			Tools.updateDatabase("INSERT INTO mysociety.uzytkownicy (imie, nazwisko, login, haslo1, haslo2, email) VALUES ('" + name + "','" + surname + "','" + username + "','" + password + "','" + password2 + "','" + email + "')");
+			
+			PostOffice.send(email);
+			
 			return "successful_registration";
 		} catch (SQLException e) {
 			Tools.printSQLException(e);
@@ -163,10 +166,11 @@ public class User {
 		this.password2 = password;
 	}
 
-	public String navigateRegister() {
-		return "navigateRegisterSuccess";
+	public String getEmail() {
+		return email;
 	}
-	public String navigateLogin() {
-		return "navigateLoginSuccess";
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

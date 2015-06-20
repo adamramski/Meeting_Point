@@ -14,7 +14,7 @@ public class PostOffice {
 	
 	public PostOffice() {}
 
-	public static String send(){
+	public static String send(String recipient){
 		System.out.println("Before1");
 		final String username = "adamramski@gmail.com";
 		final String password = "frotto11";
@@ -37,7 +37,7 @@ public class PostOffice {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("adamramski@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse("aramski@wi.zut.edu.pl"));
+					InternetAddress.parse(recipient));
 			message.setSubject("Testing Subject");
 			message.setText("Dear Mail Crawler,"
 					+ "\n\n No spam to my email, please!");
