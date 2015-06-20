@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+	<title>Your Title Here</title>
+	<link href="./css/styles.css" rel="stylesheet" type="text/css" />
+</h:head>
+<h:body>
+	<h1 class="title">Meeting Point</h1>
+	<br />
+	<div align="center">
+		<fieldset>
+			<legend>#{user.username}'s profile</legend>
+			<h:panelGrid columns="2">
+			First name:
+			<h:outputLabel value="#{user.name}"></h:outputLabel>
+			Last name:
+			<h:outputLabel value="#{user.surname}"></h:outputLabel>
+			Username:
+			<h:outputLabel value="#{user.username}"></h:outputLabel>
+			</h:panelGrid>
+			
+			
+			
+		</fieldset>
+	</div>
+
+	<div align="center">
+		<fieldset>
+			<legend>Messenger</legend>
+			<h:form>
+				<h:panelGrid columns="2">
+					  	
+			Text:<h:inputText value="#{message.message}"></h:inputText>
+			Recipient:<h:inputText value="#{message.usernameTo}"></h:inputText>
+					<h:commandButton action="#{message.send(user.username)}"
+						value="Send message"></h:commandButton>
+					<h:commandButton action="#{message.sendMail}"
+						value="Send mail message"></h:commandButton>
+				</h:panelGrid>
+			</h:form>
+					
+			<h:form>
+				
+						<b>User:</b>
+						<h:selectOneMenu value="admin">
+							<f:selectItems value="#{user.users}" />
+							<f:ajax render="msgsTable" />
+						</h:selectOneMenu>
+					
+				
+					
+				<div align="center" style="overflow: auto; height: 50px;">
+					
+					<h:dataTable var="message" value="#{user.inbox}"
+						border="1" id="msgsTable" >
+					
+					<h:column>#{message.message}</h:column>
+					</h:dataTable>
+
+				</div>
+			</h:form>
+
+		</fieldset>
+	</div>
+
+</h:body>
+</html>
