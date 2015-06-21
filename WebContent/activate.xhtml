@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+	<title>Successful registration</title>
+	<link href="./css/styles.css" rel="stylesheet" type="text/css" />
+</h:head>
+<h:body>
+
+	<h:panelGroup layout="block" rendered="#{activation.valid}">
+		<p>Your account is successfully activated!</p>
+		<p>
+			<a href="start_page.jsf">Go to login page</a>
+		</p>
+	</h:panelGroup>
+	<h:panelGroup layout="block" rendered="#{!activation.valid}">
+		<p>Activation failed! Please enter your email address to try once
+			again.</p>
+		<h:form>
+       ...
+   </h:form>
+	</h:panelGroup>
+
+</h:body>
+</html>

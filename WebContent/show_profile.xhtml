@@ -21,9 +21,10 @@
 			Username:
 			<h:outputLabel value="#{user.username}"></h:outputLabel>
 			</h:panelGrid>
-			
-			
-			
+
+			<h:form>
+				<h:commandButton action="#{user.logout}" value="Logout"></h:commandButton>
+			</h:form>
 		</fieldset>
 	</div>
 

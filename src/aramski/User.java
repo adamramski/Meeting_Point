@@ -5,19 +5,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 @ManagedBean( name = "user")
-@ApplicationScoped
+@SessionScoped
 public class User {
 	private String username;
 	private String password, password2;
 	private String name;
 	private String surname;
 	private String email;
+	private String activationLink;
+	private String activationKey;
+
+
+	public String getActivationKey() {
+		return activationKey;
+	}
 
 	private List<String> users;
 	private List<Message> inbox;
@@ -99,7 +108,6 @@ public class User {
 
 			Tools.updateDatabase("INSERT INTO mysociety.uzytkownicy (imie, nazwisko, login, haslo1, haslo2, email) VALUES ('" + name + "','" + surname + "','" + username + "','" + password + "','" + password2 + "','" + email + "')");
 			
-			PostOffice.send(email);
 			
 			return "successful_registration";
 		} catch (SQLException e) {
@@ -107,8 +115,6 @@ public class User {
 		} catch (Exception ee) {
 			ee.printStackTrace();
 		}
-
-		return "0";
 	}
 
 	final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();

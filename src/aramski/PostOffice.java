@@ -14,7 +14,7 @@ public class PostOffice {
 	
 	public PostOffice() {}
 
-	public static String send(String recipient){
+	public static String send(String recipient, String activationLink){
 		System.out.println("Before1");
 		final String username = "adamramski@gmail.com";
 		final String password = "frotto11";
@@ -38,9 +38,8 @@ public class PostOffice {
 			message.setFrom(new InternetAddress("adamramski@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(recipient));
-			message.setSubject("Testing Subject");
-			message.setText("Dear Mail Crawler,"
-					+ "\n\n No spam to my email, please!");
+			message.setSubject("Meeting Point - account activation");
+			message.setText("Hello\n\nTo activate your account please click the link below\n\n" + activationLink);
 			
 			System.out.println("Before");
 			Transport.send(message);
