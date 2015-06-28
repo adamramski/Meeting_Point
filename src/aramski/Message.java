@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 
 @ManagedBean( name = "message")
 public class Message {
@@ -15,9 +16,10 @@ public class Message {
 	private Statement statement;
 	private String query;
 	
-	public Message() {
-		
-	}
+	@ManagedProperty(value = "#{user}")
+	private User user;
+	
+	public Message() { }
 
 	public Message(String odbiorca, String nadawca, String tresc) {
 		usernameTo = odbiorca;
@@ -25,32 +27,24 @@ public class Message {
 		message = tresc;
 	}
 	
-	public String sendMail() {
-		
-		System.out.println("sendMail inside");
-		
-		//PostOffice.send();
-		return "show_profile";
-	}
-	
 	public String send (String username) {
 		try {
 
-			query = "INSERT INTO wiadomosci (nadawca, odbiorca, tresc) VALUES ('" + username + "', '" + getUsernameTo() + "', '" + getMessage() + "')";
-			statement.executeUpdate(query);
+			Tools.updateDatabase("INSERT INTO wiadomosci (nadawca, odbiorca, tresc) VALUES ('" + username + "', '" + getUsernameTo() + "', '" + getMessage() + "')");
 
 			System.out.println("wiadomosc wyslana");
-
-			return "success";
+			user.retrieveData();
+			
+			return "show_profile";
 
 		} catch (SQLException e) {
 			System.out.println("wiadomosc NIE wyslana");
 			Tools.printSQLException(e);
+			return "show_profile";
 		} catch (Exception ee) {
 			System.out.println("wiadomosc NIE wyslana");
 			ee.printStackTrace();
-		} 
-		return "failed";
+			return "show_profile";} 
 	}
 
 	public String read (String username) {
@@ -102,5 +96,9 @@ public class Message {
 	}
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

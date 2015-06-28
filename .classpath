@@ -21,5 +21,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Common Email"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Java Mail"/>
+	<classpathentry kind="lib" path="/Users/MacAdam/Documents/Java/Libraries/primefaces-5.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
